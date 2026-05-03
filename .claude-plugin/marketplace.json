@@ -6,8 +6,7 @@
   },
   "metadata": {
     "description": "WGU's internal Claude plugin marketplace. Shared brand, design, and workflow plugins maintained by the WGU team.",
-    "version": "1.0.0",
-    "pluginRoot": "."
+    "version": "1.0.0"
   },
   "plugins": [
     {
