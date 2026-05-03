@@ -2,11 +2,11 @@
   "name": "wgu",
   "owner": {
     "name": "Western Governors University",
-    "email": "brand@groups.wgu.edu"
+    "url": "https://brand.wgu.edu"
   },
   "metadata": {
     "description": "WGU's internal Claude plugin marketplace. Shared brand, design, and workflow plugins maintained by the WGU team.",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "plugins": [
     {
@@ -16,7 +16,7 @@
         "repo": "bentley-wgu/wgu-design-system-plugin"
       },
       "description": "On-brand WGU design system for Claude. Provides colors, typography, logos, patterns, slide archetypes, and UI kits so any artifact follows WGU brand guidelines.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "keywords": [
         "wgu",
         "brand",

@@ -19,7 +19,7 @@ Brand consistency is the single biggest driver of brand recall and trust. Every 
 
 ## Approval and exceptions
 
-Exceptions to any of these rules require **Brand Governance** approval. Contact: brand@groups.wgu.edu.
+Exceptions to any of these rules require **Brand Governance** approval. Contact: brand.wgu.edu.
 
 Do not assume an exception based on past work that broke a rule. Past mistakes do not set precedent.
 

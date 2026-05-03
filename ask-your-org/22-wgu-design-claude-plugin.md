@@ -81,7 +81,7 @@ The plugin is **not** a substitute for Brand Governance review on:
 - Use of the Academic Seal.
 - New patterns, icons, or campaign creative.
 
-When in doubt, draft with the plugin and review with brand@groups.wgu.edu.
+When in doubt, draft with the plugin and review with brand.wgu.edu.
 
 ## Feedback
 

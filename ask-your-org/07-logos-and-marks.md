@@ -36,7 +36,7 @@ Going below these sizes degrades the mark and reduces brand recall.
 
 ## Co-branding and partnerships
 
-Co-branded marks (WGU plus partner) require Brand Governance review. Email brand@groups.wgu.edu before producing co-branded assets.
+Co-branded marks (WGU plus partner) require Brand Governance review. Email brand.wgu.edu before producing co-branded assets.
 
 ## The owl: when and where
 
@@ -70,4 +70,4 @@ Always download from Canto. Never reuse a mark from a webpage screenshot or a th
 
 ## Brand questions
 
-For any logo or mark question, contact: **brand@groups.wgu.edu**.
+For any logo or mark question, contact: **brand.wgu.edu**.

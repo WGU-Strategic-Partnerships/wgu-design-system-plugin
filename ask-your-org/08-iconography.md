@@ -18,7 +18,7 @@ Illustrated icon categories: Technology, Military, Education, People, Achievemen
 
 ## Where the official icons live
 
-The actual icon library is held by the WGU Brand Governance Team. Contact brand@groups.wgu.edu for access.
+The actual icon library is held by the WGU Brand Governance Team. Contact brand.wgu.edu for access.
 
 ## Substitutes shipped in this design system
 

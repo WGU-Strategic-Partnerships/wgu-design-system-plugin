@@ -17,7 +17,7 @@ This system was compiled from materials the user provided:
 | (NOT provided) WGU Logos.zip | — | Referenced in the original ask but not present in the project. The university logo was extracted from the PPTX media instead. |
 | (NOT provided) WGU Powerpoint Template - Corporate Logo.potx | — | Not present. Evergreen (owl-logo) template used in its place. |
 
-Official asset source for WGU employees: the **WGU DAM (Canto)** — University Logos `wgu.canto.com/b/JJP30`, School Logos `wgu.canto.com/b/QS2NE`, Entity Logos `wgu.canto.com/b/I8C3L`, Corporate Logo `wgu.canto.com/v/MCITISTHFR/album/KCM3V`. Brand questions: `brand@groups.wgu.edu`.
+Official asset source for WGU employees: the **WGU DAM (Canto)** — University Logos `wgu.canto.com/b/JJP30`, School Logos `wgu.canto.com/b/QS2NE`, Entity Logos `wgu.canto.com/b/I8C3L`, Corporate Logo `wgu.canto.com/v/MCITISTHFR/album/KCM3V`. Brand questions: `brand.wgu.edu`.
 
 ---
 
@@ -178,7 +178,7 @@ The brand guide distinguishes two icon families:
 1. **Simple icons** — one-tone, line-based, reserved for **web UI navigation**. Includes Up/Down/Left/Right arrows, Cancel, Plus, People, Person, Location, Network, Timer, Graduation, Business, Education, Technology, Health, Certificates, Phone, Chat, Search, Carets.
 2. **Illustrated icons** — two-tone or color-background, richer and more decorative. Used in marketing collateral, flyers, infographics, brochures. Categories: Technology, Military, Education, People, Achievement, Emphasis & Accents, Affordability & Flexibility, Communication, Symbols, Generic, Business, Health, Academy. Available in "Color Background" and "No Background" variants and (for video) animated.
 
-**Source of truth.** The actual icon library is held by the WGU Brand Governance Team (`brand@groups.wgu.edu`). **This design system does not ship the real WGU illustrated icons — they were not provided.**
+**Source of truth.** The actual icon library is held by the WGU Brand Governance Team (`brand.wgu.edu`). **This design system does not ship the real WGU illustrated icons — they were not provided.**
 
 **Substitution.** For the Simple Icons family (UI navigation), this system links **[Lucide](https://lucide.dev/)** via CDN. Lucide is line-based, single-tone, geometric, and matches WGU's "one-tone UI nav" description closely. Usage:
 

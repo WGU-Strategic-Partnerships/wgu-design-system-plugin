@@ -56,7 +56,7 @@ WGU is fully online. Avoid photography that implies a traditional brick-and-mort
 
 ## Where to find approved photography
 
-Approved imagery lives in the WGU DAM (Canto). Contact brand@groups.wgu.edu for access. Do not source WGU imagery from web search results, and do not repurpose imagery from third-party publishers.
+Approved imagery lives in the WGU DAM (Canto). Contact brand.wgu.edu for access. Do not source WGU imagery from web search results, and do not repurpose imagery from third-party publishers.
 
 ## Imagery and accessibility
 

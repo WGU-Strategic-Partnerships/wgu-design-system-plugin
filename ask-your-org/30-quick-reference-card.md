@@ -93,4 +93,4 @@ A one-page cheat sheet of the most-asked values.
 
 ## Brand contact
 
-**brand@groups.wgu.edu**
+**brand.wgu.edu**

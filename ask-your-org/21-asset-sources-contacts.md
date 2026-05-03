@@ -19,7 +19,7 @@ The official, public brand guide lives at https://www.brand.wgu.edu/. It is the 
 
 ## Brand questions and approvals
 
-**brand@groups.wgu.edu**
+**brand.wgu.edu**
 
 Contact this group for:
 
@@ -60,7 +60,7 @@ Bentley Folkman owns the plugin and distributes it within WGU.
 - **Licensed fonts.** Futura PT, Rocky, and Program Nar OT Black are licensed. They are not shipped here. Web substitutes (Jost, Newsreader, Oswald) are loaded from Google Fonts for prototyping only.
 - **Illustrated icon library.** Not shipped. Pull from Canto.
 - **Photography library.** Not shipped. Pull from Canto.
-- **Academic Seal.** Not shipped outside official document templates. Request via brand@groups.wgu.edu.
+- **Academic Seal.** Not shipped outside official document templates. Request via brand.wgu.edu.
 - **School-specific lockups, Craft, Juvo, Academy, Labs, and Corporate Logo.** Pull from Canto.
 - **Live product source code.** This knowledge pack describes WGU's design system, not the source of wgu.edu, the student portal, or the mobile app.
 
@@ -70,6 +70,6 @@ If a brand question does not have an obvious answer here:
 
 1. Check the brand site at https://www.brand.wgu.edu/.
 2. Search Canto for the asset.
-3. Email brand@groups.wgu.edu.
+3. Email brand.wgu.edu.
 
 Do not guess. Brand consistency compounds.

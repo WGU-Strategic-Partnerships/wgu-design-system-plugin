@@ -71,11 +71,11 @@ If a teammate wants to also use the system as a project folder in claude.ai (the
 
 ## 6. Governance
 
-- Brand owner: `brand@groups.wgu.edu`
+- Brand owner: see contacts at [brand.wgu.edu](https://brand.wgu.edu)
 - All PRs that change `SKILL.md`'s hard rules, the logo files, or `colors_and_type.css` should require brand-team review.
 - All other PRs (new examples, new slides, doc edits) can be merged by any team contributor.
 
 ## 7. Questions
 
-Brand questions: `brand@groups.wgu.edu`
+Brand questions: [brand.wgu.edu](https://brand.wgu.edu)
 Plugin / Claude questions: ping Bentley.

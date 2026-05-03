@@ -57,7 +57,7 @@ All other brand rules still apply during the campaign.
 
 ## Where assets live
 
-Campaign-specific photography, headlines, and templates live in the WGU DAM (Canto). Contact brand@groups.wgu.edu for access. Do not produce campaign-look-alikes from third-party imagery.
+Campaign-specific photography, headlines, and templates live in the WGU DAM (Canto). Contact brand.wgu.edu for access. Do not produce campaign-look-alikes from third-party imagery.
 
 ## When the campaign ends
 

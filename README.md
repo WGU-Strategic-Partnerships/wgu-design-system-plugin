@@ -41,6 +41,6 @@ See [TEAM_SETUP.md](TEAM_SETUP.md).
 
 ## Brand questions
 
-`brand@groups.wgu.edu`
+For brand guidelines, contacts, and request forms, see [brand.wgu.edu](https://brand.wgu.edu).
 
 Official asset source for WGU employees: WGU DAM (Canto). See `skills/wgu-design/README.md` for direct links to logo, university, and corporate logo collections.

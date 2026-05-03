@@ -79,7 +79,7 @@ A. The official Simple Icons family for navigation. The design system substitute
 A. No. Illustrated icons are for marketing collateral.
 
 **Q. Can I create a new icon for my project?**
-A. No. Only the Brand Governance Team adds to the icon library. Email brand@groups.wgu.edu if your need is not covered.
+A. No. Only the Brand Governance Team adds to the icon library. Email brand.wgu.edu if your need is not covered.
 
 ## Photography
 
@@ -145,7 +145,7 @@ A. No. Half-tone portraits are campaign-specific.
 ## Process and governance
 
 **Q. Where do I send a brand approval request?**
-A. brand@groups.wgu.edu.
+A. brand.wgu.edu.
 
 **Q. Does the Claude plugin replace Brand Governance review?**
 A. No. The plugin is for prototyping and education. Public-facing campaigns, co-branded assets, and Academic Seal use still require Brand Governance review.

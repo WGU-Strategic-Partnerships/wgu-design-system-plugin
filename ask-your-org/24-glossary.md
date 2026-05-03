@@ -84,9 +84,9 @@ A glossary of terms, acronyms, and internal vocabulary used in the WGU brand and
 
 **Canto.** wgu.canto.com. WGU's DAM provider.
 
-**Brand Governance.** The team that owns brand standards, the icon library, photography approvals, and campaign visual direction. Contact: brand@groups.wgu.edu.
+**Brand Governance.** The team that owns brand standards, the icon library, photography approvals, and campaign visual direction. Contact: brand.wgu.edu.
 
-**brand@groups.wgu.edu.** The brand questions and approvals inbox.
+**brand.wgu.edu.** The brand questions and approvals inbox.
 
 ## Design system
 

@@ -57,7 +57,7 @@ WGU employees can pull official high-res assets from the **WGU DAM (Canto)**:
 - Entity Logos: `wgu.canto.com/b/I8C3L`
 - Corporate Logo: `wgu.canto.com/v/MCITISTHFR/album/KCM3V`
 
-Brand questions: `brand@groups.wgu.edu`
+Brand questions: `brand.wgu.edu`
 
 ## Known gaps
 

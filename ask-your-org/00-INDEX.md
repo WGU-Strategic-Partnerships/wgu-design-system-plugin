@@ -27,7 +27,7 @@ This is the complete knowledge pack for **Western Governors University (WGU)** b
 | 18-components-navigation.md | Headers, nav, breadcrumbs |
 | 19-components-badges-chips.md | Badges, status pills, tags |
 | 20-active-campaign-education-for-the-people.md | Current campaign spec (Dec 2025–) |
-| 21-asset-sources-contacts.md | Canto DAM links, brand@groups.wgu.edu, governance |
+| 21-asset-sources-contacts.md | Canto DAM links, brand.wgu.edu, governance |
 | 22-wgu-design-claude-plugin.md | What the WGU Design Claude plugin does and how to use it |
 | 23-do-and-dont-checklist.md | Fast reference card |
 | 24-glossary.md | Brand terms, acronyms, internal vocabulary |
@@ -44,4 +44,4 @@ In Claude.ai, open Settings -> Knowledge (or "Ask your org") and upload all `.md
 
 ## Source of truth
 
-These files distill the official WGU Brand Guide at https://www.brand.wgu.edu/ plus the Evergreen presentation template. The official assets, full icon library, and licensed fonts live in the WGU DAM (Canto). For anything not covered here, contact **brand@groups.wgu.edu**.
+These files distill the official WGU Brand Guide at https://www.brand.wgu.edu/ plus the Evergreen presentation template. The official assets, full icon library, and licensed fonts live in the WGU DAM (Canto). For anything not covered here, contact **brand.wgu.edu**.
