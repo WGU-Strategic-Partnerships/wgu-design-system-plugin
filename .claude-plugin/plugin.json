@@ -1,0 +1,17 @@
+{
+  "name": "wgu-design-system",
+  "version": "1.0.0",
+  "description": "On-brand WGU design system for Claude. Provides colors, typography, logos, patterns, slide archetypes, and UI kits so any artifact (slides, mocks, prototypes, production code) follows WGU brand guidelines.",
+  "author": {
+    "name": "WGU",
+    "email": "brand@groups.wgu.edu"
+  },
+  "keywords": [
+    "wgu",
+    "brand",
+    "design-system",
+    "branding",
+    "templates",
+    "higher-education"
+  ]
+}

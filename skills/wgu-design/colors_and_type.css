@@ -1,0 +1,258 @@
+/* =========================================================================
+   WGU Design System — Colors & Type
+   Compiled from WGU Brand Guide (brand.wgu.edu) — for internal design use.
+   =========================================================================
+
+   Font note: WGU's primary typeface is Futura PT (licensed per organization).
+   Arial is the approved system fallback for PowerPoint, email, and cases where
+   Futura PT is unavailable. For web-preview purposes this system substitutes
+   Google Fonts "Jost" for Futura PT — Jost shares Futura's geometric-sans
+   DNA (rounded O's, single-story a, generous x-height) and is the closest
+   free match. Swap in real Futura PT files (place TTF/WOFF2 under /fonts/)
+   for production work.
+
+   Numerical data (infographics, isolated numbers) uses "Rocky" — no free
+   analogue exists. We substitute Google Fonts "Newsreader" (modern literary
+   serif with similar warmth and numeric weight). Flag + swap for production.
+
+   The campaign headline font ("Program Nar OT Black", Education for the
+   People campaign) is likewise licensed. We substitute Google Fonts
+   "Oswald" (Black) — a narrow display sans with comparable compressed
+   proportions and strong vertical stance.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,700;0,800;0,900;1,400;1,500&family=Newsreader:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap');
+
+:root {
+  /* ---------- Core brand colors (exact per brand guide §8) ---------- */
+  --wgu-midnight:      #001731;   /* Deepest navy — footers, solid bg */
+  --wgu-blue:          #002855;   /* WGU Blue "Blue Midnight" — PRIMARY CORE */
+  --wgu-blue-deep:     #003057;   /* Campaign Deep Blue (Education for the People) */
+  --wgu-medium-blue:   #0070F0;   /* CTAs, links, accent */
+  --wgu-sky-blue:      #46B1EF;   /* Light accent, illustrations */
+  --wgu-lime:          #97E152;   /* Highlight accent — icons, data viz */
+
+  --wgu-light-blue:    #EEF6F9;   /* Tinted neutral surface */
+  --wgu-light-grey:    #F1F1F1;   /* Default neutral surface */
+  --wgu-grey:          #A7A7A7;   /* Muted text / dividers */
+  --wgu-white:         #FFFFFF;
+  --wgu-black:         #000000;
+
+  /* ---------- Foreground / background tokens (semantic) ---------- */
+  --bg-1:    var(--wgu-white);          /* Default page surface */
+  --bg-2:    var(--wgu-light-blue);     /* Tinted section surface */
+  --bg-3:    var(--wgu-light-grey);     /* Neutral fill (cards, chips) */
+  --bg-invert: var(--wgu-blue);         /* WGU Blue — hero/footer/dark section */
+  --bg-invert-deep: var(--wgu-midnight);/* Darkest inverted surface */
+
+  --fg-1:    var(--wgu-blue);           /* Primary text on light bg */
+  --fg-2:    #264468;                   /* Secondary text on light bg (~60% of blue) */
+  --fg-3:    var(--wgu-grey);           /* Muted / meta text */
+  --fg-on-dark-1: var(--wgu-white);     /* Primary text on dark bg */
+  --fg-on-dark-2: #BBD0E8;              /* Secondary text on dark bg */
+  --fg-link:   var(--wgu-medium-blue);
+  --fg-link-hover: #0057C2;
+  --fg-accent: var(--wgu-lime);         /* Sparingly — highlight accent */
+
+  /* ---------- Brand gradients (web only, per brand guide) ---------- */
+  --gradient-midnight:    linear-gradient(180deg, #001731 0%, #002855 100%);
+  --gradient-medium-blue: linear-gradient(135deg, #002855 0%, #0070F0 100%);
+  --gradient-protection:  linear-gradient(180deg, rgba(0,23,49,0) 0%, rgba(0,23,49,0.85) 100%);
+
+  /* ---------- Type families ---------- */
+  --font-display: 'Jost', 'Futura PT', 'Futura', 'Trebuchet MS', Arial, sans-serif;
+  --font-body:    'Jost', 'Futura PT', 'Futura', Arial, sans-serif;
+  --font-system:  Arial, Helvetica, sans-serif;                     /* PowerPoint/email fallback per guide */
+  --font-numeral: 'Newsreader', 'Rocky', Georgia, 'Times New Roman', serif;  /* Infographic numerals only */
+  --font-campaign:'Oswald', 'Program Nar OT', 'Futura PT', Arial, sans-serif;/* EFTP campaign headlines */
+
+  /* ---------- Weights (Futura PT family) ---------- */
+  --w-light:   300;
+  --w-book:    400;
+  --w-medium:  500;
+  --w-heavy:   800;
+
+  /* ---------- Type scale (matches brand guide web scale, §10) ---------- */
+  --fs-h1:  55px;     --lh-h1: 48px;      /* Futura PT Heavy */
+  --fs-h2:  55px;     --lh-h2: 48px;      /* Futura PT Medium */
+  --fs-h3:  26px;     --lh-h3: 22px;      /* Futura PT Heavy */
+  --fs-h4:  26px;     --lh-h4: 22px;      /* Futura PT Medium */
+  --fs-body: 18px;    --lh-body: 26px;    /* Futura PT Book (lh relaxed for readability) */
+  --fs-quote:18px;    --lh-quote:28px;    /* Futura PT Medium Italic */
+  --fs-small:16px;    --lh-small:22px;
+  --fs-caption:16px;  --lh-caption:20px;  /* Futura PT Light Italic */
+  --fs-eyebrow:13px;  --lh-eyebrow:16px;  /* Not in guide — derived for UI consistency */
+
+  /* ---------- Radii ---------- */
+  --radius-0: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* ---------- Elevation / shadow ---------- */
+  --shadow-sm: 0 1px 2px rgba(0, 23, 49, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 23, 49, 0.10);
+  --shadow-lg: 0 12px 32px rgba(0, 23, 49, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(0, 112, 240, 0.35);
+
+  /* ---------- Spacing scale (4px base) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ---------- Borders ---------- */
+  --border-thin:   1px solid rgba(0, 40, 85, 0.12);
+  --border-strong: 2px solid var(--wgu-blue);
+  --divider:       1px solid var(--wgu-light-grey);
+
+  /* ---------- Motion ---------- */
+  --ease-standard: cubic-bezier(0.2, 0.0, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+}
+
+/* =========================================================================
+   Semantic tag defaults
+   Use these as the baseline cascade. Component-level classes can override.
+   ========================================================================= */
+
+html, body {
+  font-family: var(--font-body);
+  font-weight: var(--w-book);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: var(--w-heavy);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+  margin: 0 0 var(--space-5);
+  text-wrap: balance;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: var(--w-medium);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: -0.005em;
+  color: var(--fg-1);
+  margin: 0 0 var(--space-5);
+  text-wrap: balance;
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: var(--w-heavy);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  color: var(--fg-1);
+  margin: 0 0 var(--space-3);
+}
+
+h4, .h4 {
+  font-family: var(--font-display);
+  font-weight: var(--w-medium);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+  color: var(--fg-1);
+  margin: 0 0 var(--space-3);
+}
+
+p, .p {
+  font-family: var(--font-body);
+  font-weight: var(--w-book);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-1);
+  margin: 0 0 var(--space-4);
+  text-wrap: pretty;
+}
+
+small, .small {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+.caption {
+  font-family: var(--font-body);
+  font-weight: var(--w-light);
+  font-style: italic;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--fg-3);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: var(--w-heavy);
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wgu-medium-blue);
+}
+
+blockquote, .quote {
+  font-family: var(--font-display);
+  font-weight: var(--w-medium);
+  font-style: italic;
+  font-size: var(--fs-quote);
+  line-height: var(--lh-quote);
+  color: var(--fg-1);
+  border-left: 3px solid var(--wgu-medium-blue);
+  padding-left: var(--space-4);
+  margin: 0 0 var(--space-5);
+}
+
+.numeral {
+  font-family: var(--font-numeral);
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+}
+
+/* Campaign (Education for the People) headline — narrow black display */
+.campaign-headline {
+  font-family: var(--font-campaign);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+a {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+a:hover { color: var(--fg-link-hover); }
+a:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: var(--radius-sm); }
+
+/* =========================================================================
+   Surface helpers
+   ========================================================================= */
+/* Slides inherit color from their .slide wrapper — don't let base h1/h2 win */
+.slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide blockquote { color: inherit; }
+.surface-dark { background: var(--bg-invert);      color: var(--fg-on-dark-1); }
+.surface-dark h1, .surface-dark h2, .surface-dark h3, .surface-dark h4,
+.surface-dark p, .surface-dark blockquote { color: inherit; }
+.surface-midnight { background: var(--bg-invert-deep); color: var(--fg-on-dark-1); }
+.surface-tint { background: var(--bg-2); color: var(--fg-1); }
+.surface-gradient-midnight   { background: var(--gradient-midnight);    color: var(--fg-on-dark-1); }
+.surface-gradient-medium-blue{ background: var(--gradient-medium-blue); color: var(--fg-on-dark-1); }

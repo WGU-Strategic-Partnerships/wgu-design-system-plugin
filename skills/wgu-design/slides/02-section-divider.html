@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>WGU Slide — Section Divider</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:#000;overflow:hidden;}
+  .slide{width:1280px;height:720px;position:relative;background:linear-gradient(135deg, #002855 0%, #0070F0 100%);color:#fff;overflow:hidden;font-family:var(--font-display);}
+  .pattern{position:absolute;right:0;top:0;bottom:0;width:360px;background:url('../assets/patterns/pathways-navy-tall.png') right center/cover;opacity:0.9;}
+  .fade{position:absolute;inset:0 360px 0 0;background:linear-gradient(90deg, rgba(0,40,85,0) 60%, rgba(0,40,85,0.4) 100%);}
+  .content{position:absolute;inset:0;padding:80px 96px;display:flex;flex-direction:column;justify-content:center;}
+  .no{font-family:'Newsreader',serif;font-weight:600;font-size:24px;color:#97E152;letter-spacing:0.08em;}
+  h1{font-weight:800;font-size:120px;line-height:0.95;letter-spacing:-0.015em;margin:10px 0 0;max-width:860px;color:#fff;}
+  .rule{width:160px;height:6px;background:#97E152;margin-top:36px;}
+  .sub{font-family:var(--font-body);font-weight:400;font-size:22px;line-height:1.4;color:#BBD0E8;margin-top:28px;max-width:640px;}
+  .owl{position:absolute;top:56px;left:96px;height:44px;filter:brightness(0) invert(1);}
+</style></head>
+<body><div class="slide">
+  <div class="pattern"></div><div class="fade"></div>
+  <img class="owl" src="../assets/logos/wgu-owl-icon.png" alt="WGU">
+  <div class="content">
+    <div class="no">02 — Section</div>
+    <h1>Personalizing<br>learning.</h1>
+    <div class="rule"></div>
+    <div class="sub">Flexibility · Empowerment · Support</div>
+  </div>
+</div></body></html>

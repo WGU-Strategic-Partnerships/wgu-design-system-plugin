@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>WGU Student Portal — UI Kit (stub)</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body{margin:0;background:#F5F7FA;}
+  .topbar{background:#fff;border-bottom:1px solid rgba(0,40,85,0.08);padding:14px 32px;display:flex;align-items:center;gap:24px;}
+  .topbar img{height:28px;}
+  .topbar nav{display:flex;gap:22px;margin-left:24px;}
+  .topbar nav a{font-family:var(--font-display);font-weight:500;font-size:14px;color:var(--wgu-blue);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent;}
+  .topbar nav a.active{border-color:var(--wgu-medium-blue);color:var(--wgu-medium-blue);}
+  .avatar{margin-left:auto;width:36px;height:36px;border-radius:999px;background:var(--wgu-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;}
+  .main{max-width:1200px;margin:0 auto;padding:40px 32px;}
+  .greet{font-family:var(--font-display);font-weight:800;font-size:40px;line-height:1.05;color:var(--wgu-blue);margin:0 0 6px;}
+  .sub{font-family:var(--font-body);font-size:17px;color:var(--fg-2);margin:0 0 32px;}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
+  .card{background:#fff;border-radius:12px;border:1px solid rgba(0,40,85,0.06);box-shadow:0 1px 2px rgba(0,23,49,0.06);padding:24px;}
+  .card h3{font-family:var(--font-display);font-weight:700;font-size:18px;margin:0 0 16px;color:var(--wgu-blue);}
+  .progress{height:10px;background:#EEF6F9;border-radius:999px;overflow:hidden;margin:10px 0 6px;}
+  .progress .bar{height:100%;background:linear-gradient(90deg, var(--wgu-medium-blue), var(--wgu-sky-blue));width:67%;}
+  .meta{font-family:var(--font-body);font-size:13px;color:var(--fg-3);}
+  .course{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid rgba(0,40,85,0.06);}
+  .course:first-of-type{border-top:0;}
+  .course .code{font-family:'Newsreader',serif;font-weight:600;font-size:22px;color:var(--wgu-medium-blue);width:72px;}
+  .course .title{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--wgu-blue);flex:1;}
+  .status{font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;}
+  .status.done{background:#E8F7D6;color:#3A6B1E;}
+  .status.go{background:#E3F0FF;color:#0057C2;}
+  .status.up{background:#F1F1F1;color:var(--fg-2);}
+  .todo{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(0,40,85,0.06);}
+  .todo:first-of-type{border-top:0;}
+  .dot{width:8px;height:8px;border-radius:999px;background:var(--wgu-lime);margin-top:8px;flex-shrink:0;}
+  .todo .tt{font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--wgu-blue);}
+  .todo .td{font-family:var(--font-body);font-size:12px;color:var(--fg-3);margin-top:2px;}
+  .flag{background:#FFF8DF;border:1px solid #EEDC87;padding:12px 14px;border-radius:8px;font-family:var(--font-body);font-size:13px;color:#6B4B00;margin-bottom:20px;}
+</style></head>
+<body>
+<div class="topbar">
+  <img src="../../assets/logos/wgu-logo-university.png" alt="WGU">
+  <nav>
+    <a href="#" class="active">Dashboard</a>
+    <a href="#">Courses</a>
+    <a href="#">Degree plan</a>
+    <a href="#">Mentors</a>
+    <a href="#">Resources</a>
+  </nav>
+  <div class="avatar">JR</div>
+</div>
+<div class="main">
+  <div class="flag"><strong>Stub UI:</strong> This is a minimal student-portal dashboard built from brand principles only — no live WGU portal was provided. Replace with real screens when codebase/Figma is attached.</div>
+  <h1 class="greet">Welcome back, Jamie.</h1>
+  <p class="sub">You've completed 4 of 6 competencies this term. Keep going — your next assessment is ready when you are.</p>
+  <div class="grid">
+    <div>
+      <div class="card" style="margin-bottom:20px;">
+        <h3>Term progress</h3>
+        <div style="display:flex;align-items:baseline;gap:10px;"><div style="font-family:'Newsreader',serif;font-weight:600;font-size:48px;color:var(--wgu-blue);">67%</div><div class="meta">completed — 4 of 6 competency units</div></div>
+        <div class="progress"><div class="bar"></div></div>
+        <div class="meta">Term ends Aug 31, 2026</div>
+      </div>
+      <div class="card">
+        <h3>Your courses</h3>
+        <div class="course"><div class="code">C180</div><div class="title">Managerial Economics</div><span class="status done">Complete</span></div>
+        <div class="course"><div class="code">C212</div><div class="title">Marketing Management</div><span class="status done">Complete</span></div>
+        <div class="course"><div class="code">C216</div><div class="title">Business Communication</div><span class="status go">In progress</span></div>
+        <div class="course"><div class="code">C218</div><div class="title">Managing Human Capital</div><span class="status go">In progress</span></div>
+        <div class="course"><div class="code">C225</div><div class="title">Financial Management</div><span class="status up">Up next</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:20px;">
+        <h3>Up next</h3>
+        <div class="todo"><div class="dot"></div><div><div class="tt">Submit C216 performance assessment</div><div class="td">Due Tue, Apr 28</div></div></div>
+        <div class="todo"><div class="dot"></div><div><div class="tt">Schedule C218 proctored exam</div><div class="td">Window opens May 3</div></div></div>
+        <div class="todo"><div class="dot"></div><div><div class="tt">Mentor check-in call</div><div class="td">Fri, Apr 25 · 2:00 PM MT</div></div></div>
+      </div>
+      <div class="card" style="background:var(--wgu-blue);color:#fff;border:0;">
+        <h3 style="color:#fff;">Program Mentor</h3>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+          <div style="width:48px;height:48px;border-radius:999px;background:var(--wgu-lime);color:var(--wgu-blue);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;">SK</div>
+          <div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:15px;">Samira K.</div>
+            <div style="font-family:var(--font-body);font-size:12px;color:#BBD0E8;">School of Business</div>
+          </div>
+        </div>
+        <button style="margin-top:16px;width:100%;font-family:var(--font-display);font-weight:700;font-size:14px;background:var(--wgu-lime);color:var(--wgu-blue);border:0;padding:12px;border-radius:999px;cursor:pointer;">Schedule a call</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

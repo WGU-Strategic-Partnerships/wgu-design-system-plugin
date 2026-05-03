@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>WGU Slide — Comparison</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:#000;overflow:hidden;}
+  .slide{width:1280px;height:720px;position:relative;background:#fff;color:#002855;overflow:hidden;font-family:var(--font-display);}
+  .header{padding:40px 64px 0;display:flex;justify-content:space-between;align-items:center;}
+  .header img{height:32px;}
+  .no{font-family:var(--font-body);font-size:14px;color:#A7A7A7;letter-spacing:0.1em;}
+  .body{padding:24px 64px;}
+  .eyebrow{font-weight:700;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;color:#0070F0;}
+  h1{font-weight:800;font-size:48px;line-height:1.05;margin:10px 0 28px;}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .col{border-radius:12px;padding:28px 28px 32px;min-height:360px;}
+  .col.a{background:#F1F1F1;color:#264468;}
+  .col.b{background:#002855;color:#fff;position:relative;overflow:hidden;}
+  .col.b::after{content:"";position:absolute;top:0;right:0;width:120px;height:120px;background:url('../assets/patterns/connect-blue.png') center/cover;opacity:0.8;}
+  .col h3{font-weight:700;font-size:22px;margin:0 0 14px;letter-spacing:0.02em;text-transform:uppercase;}
+  .col.a h3{color:#A7A7A7;}
+  .col.b h3{color:#97E152;}
+  ul{margin:0;padding:0;list-style:none;font-family:var(--font-body);font-size:18px;line-height:1.5;}
+  li{padding:10px 0;border-top:1px solid rgba(0,40,85,0.08);}
+  .col.b li{border-top-color:rgba(255,255,255,0.12);}
+  li:first-child{border-top:0;}
+  li::before{content:"—";margin-right:12px;color:#A7A7A7;}
+  .col.b li::before{color:#97E152;}
+</style></head>
+<body><div class="slide">
+  <div class="header"><img src="../assets/logos/wgu-logo-university.png" alt="WGU"><div class="no">05 / 06</div></div>
+  <div class="body">
+    <div class="eyebrow">The WGU difference</div>
+    <h1>A different model for how college works.</h1>
+    <div class="cols">
+      <div class="col a"><h3>Traditional</h3><ul>
+        <li>Rigid semester schedule</li>
+        <li>Credit-hour tuition, variable cost</li>
+        <li>Lectures at set times</li>
+        <li>One-size-fits-all pacing</li>
+      </ul></div>
+      <div class="col b"><h3>WGU</h3><ul>
+        <li>Start any month, test when ready</li>
+        <li>Flat-rate tuition per 6-month term</li>
+        <li>24/7 access to course materials</li>
+        <li>Competency-based — move at your pace</li>
+      </ul></div>
+    </div>
+  </div>
+</div></body></html>

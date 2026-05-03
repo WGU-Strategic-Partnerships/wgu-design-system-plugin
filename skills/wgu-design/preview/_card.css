@@ -1,0 +1,46 @@
+/* Preview card base styles - imported by every card */
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #FAFBFC;
+}
+.card {
+  width: 700px;
+  padding: 24px 28px;
+  background: var(--wgu-white);
+  color: var(--fg-1);
+  font-family: var(--font-body);
+}
+.card.dark {
+  background: var(--wgu-blue);
+  color: var(--fg-on-dark-1);
+}
+.card.midnight {
+  background: var(--wgu-midnight);
+  color: var(--fg-on-dark-1);
+}
+.row { display: flex; gap: 12px; align-items: center; }
+.grid { display: grid; gap: 12px; }
+.swatch {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0,40,85,0.08);
+}
+.meta {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--fg-3);
+  line-height: 1.4;
+}
+.meta strong { color: var(--fg-1); font-weight: 600; }
+.label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
