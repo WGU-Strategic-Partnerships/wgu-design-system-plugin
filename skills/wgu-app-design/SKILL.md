@@ -22,7 +22,7 @@ Key files:
 When asked to build a WGU app, first ask: "launcher (hub of tools, like WGU.tools) or deep app (single focused tool, like MBR Builder)?" Then read the matching archetype doc and the supporting references before writing any code.
 
 Hard assumptions that ride with this skill:
-1. Stack is non-negotiable: Next.js 16 App Router + React 19 + TypeScript + Tailwind v4 + `@supabase/ssr` + Lucide.
+1. Stack is non-negotiable: Next.js 16 App Router + React 19 + TypeScript + Tailwind v4 + `@supabase/ssr` + Lucide. `src/` directory layout.
 2. Auth is Google SSO restricted to `@wgu.edu` with three roles sourced from a Smartsheet master roster.
 3. Server modules import `server-only`. Third-party data reads always go server-side.
 4. Brand tokens come from the sibling `wgu-design` skill, never re-derived.
