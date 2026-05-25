@@ -902,8 +902,137 @@ export type GaugeProps = {
   style?: CSSProperties
 }
 
-export function Gauge({ value, min, max, thresholds, size, label, formatValue, invert, style }: GaugeProps) {
-  // ... full SVG arc rendering — see source file
+const DIM: Record<GaugeSize, { width: number; height: number; valueFs: number; labelFs: number; arcStroke: number }> = {
+  sm: { width: 120, height: 78, valueFs: 18, labelFs: 9, arcStroke: 10 },
+  md: { width: 180, height: 112, valueFs: 24, labelFs: 10, arcStroke: 13 },
+  lg: { width: 240, height: 150, valueFs: 32, labelFs: 11, arcStroke: 16 },
+}
+
+const ZONE_GREEN = 'var(--pos)'
+const ZONE_AMBER = '#D9A33B'
+const ZONE_RED = 'var(--neg)'
+const ZONE_BG = 'var(--rule-strong)'
+
+function parseValue(v: number | string | null | undefined): number | null {
+  if (v == null || v === '') return null
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null
+  const n = parseFloat(String(v).replace(/[,\s%+]/g, ''))
+  return Number.isFinite(n) ? n : null
+}
+
+export function Gauge({
+  value,
+  min = 0,
+  max,
+  thresholds,
+  size = 'md',
+  label,
+  formatValue,
+  invert = false,
+  style,
+}: GaugeProps) {
+  const { width, height, valueFs, labelFs, arcStroke } = DIM[size]
+  const numeric = parseValue(value)
+  const hasValue = numeric != null
+
+  // Geometry — center the arc inside the box. Arc occupies the top half;
+  // pointer originates at center bottom.
+  const cx = width / 2
+  const cy = height - 18
+  const radius = Math.min(width / 2, height) - arcStroke / 2 - 2
+
+  const colors = invert
+    ? [ZONE_GREEN, ZONE_AMBER, ZONE_RED]
+    : [ZONE_RED, ZONE_AMBER, ZONE_GREEN]
+
+  // Build three arc paths covering 180deg total based on thresholds.
+  const t = (n: number) => Math.max(min, Math.min(max, n))
+  const stops = [min, t(thresholds[0]), t(thresholds[1]), max]
+  const arcs: { d: string; color: string }[] = []
+  for (let i = 0; i < 3; i++) {
+    const a0 = (stops[i] - min) / (max - min)
+    const a1 = (stops[i + 1] - min) / (max - min)
+    if (a1 - a0 <= 0) continue
+    arcs.push({ d: arcPath(cx, cy, radius, a0, a1), color: colors[i] })
+  }
+
+  // Pointer angle: 0 at min (-90deg), 1 at max (+90deg).
+  const fraction = hasValue ? Math.max(0, Math.min(1, (numeric! - min) / (max - min))) : 0
+  const pointerAngleDeg = -90 + fraction * 180
+
+  const display = hasValue ? (formatValue ? formatValue(numeric!) : Math.round(numeric!).toString()) : '—'
+
+  return (
+    <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 4, ...style }}>
+      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden>
+        {/* Background arc */}
+        <path d={arcPath(cx, cy, radius, 0, 1)} fill="none" stroke={ZONE_BG} strokeWidth={arcStroke} strokeLinecap="butt" />
+        {/* Colored zone arcs */}
+        {arcs.map((a, i) => (
+          <path
+            key={i}
+            d={a.d}
+            fill="none"
+            stroke={a.color}
+            strokeWidth={arcStroke}
+            strokeLinecap="butt"
+          />
+        ))}
+        {/* Pointer triangle (only if a value is present) */}
+        {hasValue && (
+          <g transform={`rotate(${pointerAngleDeg} ${cx} ${cy})`}>
+            <polygon
+              points={`${cx},${cy - radius - arcStroke / 2 - 2} ${cx - 5},${cy - 4} ${cx + 5},${cy - 4}`}
+              fill="var(--wgu-blue)"
+            />
+            <circle cx={cx} cy={cy - 1} r={3} fill="var(--wgu-blue)" />
+          </g>
+        )}
+        {/* Center value */}
+        <text
+          x={cx}
+          y={cy - 4}
+          textAnchor="middle"
+          fontFamily="Newsreader, Georgia, serif"
+          fontSize={valueFs}
+          fontWeight={600}
+          fill="var(--wgu-blue)"
+        >
+          {display}
+        </text>
+      </svg>
+      {label && (
+        <div
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 500,
+            fontSize: labelFs,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--fg-2)',
+          }}
+        >
+          {label}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/**
+ * Build an SVG arc path from `start` (0..1) to `end` (0..1) along a
+ * half-circle from -90deg (left) through 0deg (top) to +90deg (right),
+ * around (cx, cy) with the given radius.
+ */
+function arcPath(cx: number, cy: number, r: number, start: number, end: number): string {
+  const angleStart = -Math.PI + start * Math.PI
+  const angleEnd = -Math.PI + end * Math.PI
+  const x0 = cx + r * Math.cos(angleStart)
+  const y0 = cy + r * Math.sin(angleStart)
+  const x1 = cx + r * Math.cos(angleEnd)
+  const y1 = cy + r * Math.sin(angleEnd)
+  const largeArc = end - start > 0.5 ? 1 : 0
+  return `M ${x0} ${y0} A ${r} ${r} 0 ${largeArc} 1 ${x1} ${y1}`
 }
 ```
 
@@ -946,8 +1075,124 @@ export type PacingGaugeProps = {
   style?: CSSProperties
 }
 
-export function PacingGauge({ value, min, max, thresholds, invert, height, scaleLabels, fillColor, showThresholdMarker, style }: PacingGaugeProps) {
-  // ... full horizontal track rendering — see source file
+const ZONE_GREEN_BG = 'rgba(46, 133, 64, 0.20)'
+const ZONE_AMBER_BG = 'rgba(242, 169, 0, 0.20)'
+const ZONE_RED_BG = 'rgba(181, 58, 42, 0.18)'
+
+const FILL_GREEN = 'var(--pos)'
+const FILL_AMBER = 'var(--amber)'
+const FILL_RED = 'var(--neg)'
+
+function parseValue(v: number | string | null | undefined): number | null {
+  if (v == null || v === '') return null
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null
+  const n = parseFloat(String(v).replace(/[,\s%+]/g, ''))
+  return Number.isFinite(n) ? n : null
+}
+
+export function PacingGauge({
+  value,
+  min = 0,
+  max,
+  thresholds,
+  invert = false,
+  height = 28,
+  scaleLabels,
+  fillColor,
+  showThresholdMarker = true,
+  style,
+}: PacingGaugeProps) {
+  const numeric = parseValue(value)
+  const hasValue = numeric != null
+
+  const range = max - min
+  const pctOf = (v: number) => Math.max(0, Math.min(1, (v - min) / range))
+
+  // Zone breakpoints as percentages along the track.
+  const zoneA = pctOf(thresholds[0])
+  const zoneB = pctOf(thresholds[1])
+
+  // Colors for the three bands, in display order (left → right).
+  const [bgLeft, bgMid, bgRight] = invert
+    ? [ZONE_GREEN_BG, ZONE_AMBER_BG, ZONE_RED_BG]
+    : [ZONE_RED_BG, ZONE_AMBER_BG, ZONE_GREEN_BG]
+
+  const trackBackground = `linear-gradient(to right, ${bgLeft} 0% ${zoneA * 100}%, ${bgMid} ${zoneA * 100}% ${zoneB * 100}%, ${bgRight} ${zoneB * 100}% 100%)`
+
+  // Determine fill color from where the value lands.
+  const computedFill = (() => {
+    if (fillColor) return fillColor
+    if (!hasValue) return FILL_AMBER
+    const fraction = pctOf(numeric!)
+    if (invert) {
+      if (fraction <= zoneA) return FILL_GREEN
+      if (fraction <= zoneB) return FILL_AMBER
+      return FILL_RED
+    }
+    if (fraction >= zoneB) return FILL_GREEN
+    if (fraction >= zoneA) return FILL_AMBER
+    return FILL_RED
+  })()
+
+  const fillPct = hasValue ? pctOf(numeric!) * 100 : 0
+
+  return (
+    <div style={{ width: '100%', ...style }}>
+      <div
+        style={{
+          position: 'relative',
+          height,
+          background: trackBackground,
+          display: 'flex',
+        }}
+      >
+        {hasValue && (
+          <div
+            data-pacing-fill
+            style={{
+              height: '100%',
+              width: `${fillPct}%`,
+              background: computedFill,
+              transition: 'width 200ms var(--ease-standard, ease)',
+            }}
+          />
+        )}
+        {/* Threshold marker — solid line at the "target" boundary (typically 100%) */}
+        {showThresholdMarker && (
+          <div
+            style={{
+              position: 'absolute',
+              left: `${zoneB * 100}%`,
+              top: -4,
+              bottom: -4,
+              width: 2,
+              background: 'var(--wgu-blue)',
+              opacity: 0.5,
+            }}
+          />
+        )}
+      </div>
+      {scaleLabels && scaleLabels.length > 0 && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: 8,
+            fontFamily: 'var(--font-display)',
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'var(--fg-2)',
+          }}
+        >
+          {scaleLabels.map((label, i) => (
+            <span key={i}>{label}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 ```
 
@@ -990,8 +1235,103 @@ export type SparklineProps = {
   style?: CSSProperties
 }
 
-export function Sparkline({ data, expectedBars, width, height, popColor, barColor, partialCaption, style }: SparklineProps) {
-  // ... full SVG bar rendering — see source file
+const DEFAULT_PARTIAL = (shown: number, expected: number) =>
+  `${shown} of ${expected} months of history`
+
+export function Sparkline({
+  data,
+  expectedBars,
+  width = 320,
+  height = 110,
+  popColor = 'var(--wgu-blue)',
+  barColor = 'var(--wgu-sky-blue)',
+  partialCaption = DEFAULT_PARTIAL,
+  style,
+}: SparklineProps) {
+  const expected = expectedBars ?? data.length
+  const isPartial = data.length < expected
+
+  // Empty state — render a thin rule and a caption so the layout doesn't
+  // collapse but we don't fake bars.
+  if (data.length === 0) {
+    return (
+      <div style={{ width: '100%', ...style }}>
+        <div
+          style={{
+            height,
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            color: 'var(--fg-3)',
+            fontFamily: 'var(--font-numeral)',
+            fontSize: 13,
+          }}
+        >
+          No history yet.
+        </div>
+      </div>
+    )
+  }
+
+  // Compute bar geometry. Reserve consistent slot width so partial data
+  // shows fewer bars at the right size, not stretched.
+  const slotWidth = width / expected
+  const gap = Math.min(4, slotWidth * 0.18)
+  const barW = Math.max(4, slotWidth - gap)
+  const baselineY = height - 2
+  const peakY = 6
+  const max = Math.max(1, ...data.map((d) => d.value))
+
+  const bars = data.map((d, i) => {
+    const valuePct = max === 0 ? 0 : d.value / max
+    const barHeight = Math.max(2, valuePct * (baselineY - peakY))
+    const x = i * slotWidth
+    const y = baselineY - barHeight
+    const isLast = i === data.length - 1
+    return { x, y, barH: barHeight, value: d.value, label: d.label, isLast }
+  })
+
+  return (
+    <div style={{ width: '100%', ...style }}>
+      <svg
+        width="100%"
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="none"
+        style={{ display: 'block' }}
+      >
+        <g data-spark-bars>
+          {bars.map((b, i) => (
+            <rect
+              key={i}
+              x={b.x + gap / 2}
+              y={b.y}
+              width={barW}
+              height={b.barH}
+              fill={b.isLast ? popColor : barColor}
+            >
+              {b.label && <title>{`${b.label}: ${b.value.toLocaleString()}`}</title>}
+            </rect>
+          ))}
+        </g>
+      </svg>
+      {isPartial && partialCaption && (
+        <div
+          style={{
+            marginTop: 6,
+            fontFamily: 'var(--font-display)',
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: '0.10em',
+            textTransform: 'uppercase',
+            color: 'var(--fg-3)',
+          }}
+        >
+          {partialCaption(data.length, expected)}
+        </div>
+      )}
+    </div>
+  )
 }
 ```
 
@@ -1025,8 +1365,142 @@ export type DonutProps = {
   style?: CSSProperties
 }
 
-export function Donut({ label, slices, total, diameter, style }: DonutProps) {
-  // ... full SVG arc rendering — see source file
+function parseNum(v: number | string | null | undefined): number {
+  if (v == null || v === '') return 0
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  const n = parseFloat(String(v).replace(/[,\s]/g, ''))
+  return Number.isFinite(n) ? n : 0
+}
+
+export function Donut({
+  label,
+  slices,
+  total,
+  diameter = 110,
+  style,
+}: DonutProps) {
+  const values = slices.map((s) => parseNum(s.value))
+  const sum = values.reduce((a, b) => a + b, 0)
+  const totalNumber = total != null ? parseNum(total) : sum
+
+  const r = diameter / 2 - 6
+  const stroke = Math.max(10, diameter * 0.18)
+  const c = 2 * Math.PI * r
+  const cx = diameter / 2
+  const cy = diameter / 2
+
+  // Build stroke-dasharray + stroke-dashoffset arcs to render the donut.
+  let cumulative = 0
+  const arcs = slices.map((s, i) => {
+    const v = values[i]
+    const pct = sum > 0 ? v / sum : 0
+    const dash = c * pct
+    const gap = c - dash
+    const offset = -cumulative * c
+    cumulative += pct
+    return { color: s.color, dash, gap, offset, pct }
+  })
+
+  return (
+    <div
+      style={{
+        display: 'inline-flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 8,
+        ...style,
+      }}
+    >
+      {label && (
+        <div
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: 11,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'var(--fg-2)',
+          }}
+        >
+          {label}
+        </div>
+      )}
+      <svg width={diameter} height={diameter} viewBox={`0 0 ${diameter} ${diameter}`} aria-hidden>
+        {sum === 0 ? (
+          <circle
+            cx={cx}
+            cy={cy}
+            r={r}
+            fill="none"
+            stroke="var(--rule-strong)"
+            strokeWidth={stroke}
+          />
+        ) : (
+          arcs.map((a, i) => (
+            <circle
+              key={i}
+              cx={cx}
+              cy={cy}
+              r={r}
+              fill="none"
+              stroke={a.color}
+              strokeWidth={stroke}
+              strokeDasharray={`${a.dash} ${a.gap}`}
+              strokeDashoffset={a.offset}
+              transform={`rotate(-90 ${cx} ${cy})`}
+            />
+          ))
+        )}
+        <text
+          x={cx}
+          y={cy + 8}
+          textAnchor="middle"
+          fontFamily="Newsreader, Georgia, serif"
+          fontSize={Math.round(diameter * 0.26)}
+          fontWeight={600}
+          fill="var(--wgu-blue)"
+        >
+          {totalNumber.toLocaleString()}
+        </text>
+      </svg>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: diameter }}>
+        {slices.map((s, i) => (
+          <div
+            key={s.label}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '10px 1fr auto',
+              gap: 8,
+              alignItems: 'center',
+              fontSize: 11,
+            }}
+          >
+            <span
+              style={{
+                width: 10,
+                height: 10,
+                background: s.color,
+                display: 'inline-block',
+              }}
+            />
+            <span style={{ color: 'var(--fg-2)', fontWeight: 600, letterSpacing: '0.04em' }}>
+              {s.label}
+            </span>
+            <span
+              style={{
+                fontFamily: 'var(--font-numeral)',
+                fontWeight: 500,
+                color: 'var(--wgu-blue)',
+                fontVariantNumeric: 'tabular-nums',
+              }}
+            >
+              {values[i].toLocaleString()}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 ```
 
@@ -1067,8 +1541,115 @@ export type FunnelProps = {
   style?: CSSProperties
 }
 
-export function Funnel({ title, total, stages, width, barHeight, style }: FunnelProps) {
-  // ... full SVG funnel rendering — see source file
+const TOP_BAR_RATIO = 1.0
+const STAGE_NARROW_FACTOR = 0.82 // each bar is ~18% narrower than the one above
+
+function parseCount(v: number | string | null | undefined): number {
+  if (v == null || v === '') return 0
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  const n = parseFloat(String(v).replace(/[,\s]/g, ''))
+  return Number.isFinite(n) ? n : 0
+}
+
+export function Funnel({
+  title,
+  total,
+  stages,
+  width = 200,
+  barHeight = 30,
+  style,
+}: FunnelProps) {
+  const counts = stages.map((s) => parseCount(s.count))
+  const totalNumber = total != null ? parseCount(total) : counts.reduce((a, b) => a + b, 0)
+  const labelGap = 6
+  const labelWidth = 92
+
+  const svgHeight = stages.length * (barHeight + 4)
+
+  // Bar widths shrink geometrically per stage.
+  const barWidths = stages.map((_, i) => width * TOP_BAR_RATIO * Math.pow(STAGE_NARROW_FACTOR, i))
+
+  return (
+    <div style={{ display: 'inline-flex', flexDirection: 'column', gap: 8, ...style }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          gap: 10,
+          paddingBottom: 6,
+          borderBottom: '1px solid var(--rule-strong)',
+        }}
+      >
+        <span
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 800,
+            fontSize: 12,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--wgu-blue)',
+          }}
+        >
+          {title}
+        </span>
+        <span
+          style={{
+            fontFamily: 'var(--font-numeral)',
+            fontWeight: 600,
+            fontSize: 18,
+            color: 'var(--wgu-blue)',
+            marginLeft: 'auto',
+            fontVariantNumeric: 'tabular-nums',
+          }}
+        >
+          {totalNumber.toLocaleString()}
+        </span>
+      </div>
+      <svg
+        width={width + labelGap + labelWidth}
+        height={svgHeight}
+        viewBox={`0 0 ${width + labelGap + labelWidth} ${svgHeight}`}
+        aria-hidden
+      >
+        {stages.map((stage, i) => {
+          const w = barWidths[i]
+          const x = (width - w) / 2
+          const y = i * (barHeight + 4)
+          const count = counts[i]
+          return (
+            <g key={i}>
+              <rect x={x} y={y} width={w} height={barHeight} fill={stage.color} />
+              {count > 0 && (
+                <text
+                  x={x + w / 2}
+                  y={y + barHeight / 2 + 4}
+                  textAnchor="middle"
+                  fontFamily="Jost, sans-serif"
+                  fontWeight={700}
+                  fontSize={12}
+                  fill="#fff"
+                >
+                  {count.toLocaleString()}
+                </text>
+              )}
+              <text
+                x={width + labelGap}
+                y={y + barHeight / 2 + 4}
+                textAnchor="start"
+                fontFamily="Jost, sans-serif"
+                fontWeight={600}
+                fontSize={11}
+                fill="var(--fg-2)"
+                style={{ letterSpacing: '0.06em' }}
+              >
+                {stage.label.toUpperCase()}
+              </text>
+            </g>
+          )
+        })}
+      </svg>
+    </div>
+  )
 }
 ```
 
@@ -1105,8 +1686,87 @@ export type HBarProps = {
   style?: CSSProperties
 }
 
-export function HBar({ items, max, labelWidth, barHeight, formatValue, style }: HBarProps) {
-  // ... full CSS bar rendering — see source file
+function parseNum(v: number | string | null | undefined): number {
+  if (v == null || v === '') return 0
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  const n = parseFloat(String(v).replace(/[,\s]/g, ''))
+  return Number.isFinite(n) ? n : 0
+}
+
+export function HBar({
+  items,
+  max,
+  labelWidth = 110,
+  barHeight = 8,
+  formatValue,
+  style,
+}: HBarProps) {
+  const values = items.map((i) => parseNum(i.value))
+  const denom = max ?? Math.max(1, ...values)
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, ...style }}>
+      {items.map((item, i) => {
+        const v = values[i]
+        const pct = denom > 0 ? (v / denom) * 100 : 0
+        const display = formatValue ? formatValue(v) : v.toLocaleString()
+        return (
+          <div
+            key={item.label}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: `${labelWidth}px 1fr 50px`,
+              gap: 10,
+              alignItems: 'center',
+              fontFamily: 'var(--font-display)',
+            }}
+          >
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                color: 'var(--fg-2)',
+                letterSpacing: '0.04em',
+              }}
+            >
+              {item.label}
+            </span>
+            <div
+              style={{
+                position: 'relative',
+                height: barHeight,
+                background: 'var(--rule)',
+                borderRadius: 0,
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: `${pct}%`,
+                  background: item.color,
+                  transition: 'width 220ms var(--ease-standard)',
+                }}
+              />
+            </div>
+            <span
+              style={{
+                fontFamily: 'var(--font-numeral)',
+                fontWeight: 500,
+                fontSize: 13,
+                color: 'var(--wgu-blue)',
+                textAlign: 'right',
+                fontVariantNumeric: 'tabular-nums',
+              }}
+            >
+              {display}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 ```
 
@@ -1150,8 +1810,138 @@ export type ScoreTableProps<T> = {
   style?: CSSProperties
 }
 
-export function ScoreTable<T>({ columns, rows, eyebrow, bandThresholds, invertBand, emptyText, style }: ScoreTableProps<T>) {
-  // ... full table rendering — see source file
+const BAND_GREEN = 'rgba(95, 168, 0, 0.18)'
+const BAND_AMBER = 'rgba(217, 163, 59, 0.20)'
+const BAND_RED = 'rgba(192, 57, 43, 0.18)'
+
+function parseNumeric(v: unknown): number | null {
+  if (v == null || v === '') return null
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null
+  const n = parseFloat(String(v).replace(/[,\s%+]/g, ''))
+  return Number.isFinite(n) ? n : null
+}
+
+function bandColor(value: number, thresholds: [number, number], invert: boolean): string {
+  const [low, high] = thresholds
+  if (invert) {
+    if (value <= low) return BAND_GREEN
+    if (value <= high) return BAND_AMBER
+    return BAND_RED
+  }
+  if (value >= high) return BAND_GREEN
+  if (value >= low) return BAND_AMBER
+  return BAND_RED
+}
+
+export function ScoreTable<T>({
+  columns,
+  rows,
+  eyebrow,
+  bandThresholds = [80, 100],
+  invertBand = false,
+  emptyText,
+  style,
+}: ScoreTableProps<T>) {
+  return (
+    <div style={{ ...style }}>
+      {eyebrow && (
+        <div
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: 11,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'var(--fg-2)',
+            marginBottom: 6,
+          }}
+        >
+          {eyebrow}
+        </div>
+      )}
+      <table
+        style={{
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontFamily: 'var(--font-display)',
+        }}
+      >
+        <thead>
+          <tr>
+            {columns.map((col, i) => (
+              <th
+                key={i}
+                style={{
+                  background: 'var(--wgu-blue)',
+                  color: 'var(--wgu-white)',
+                  fontSize: 10,
+                  fontWeight: 800,
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  padding: '8px 10px',
+                  textAlign: col.align ?? 'left',
+                  width: col.width,
+                }}
+              >
+                {col.header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.length === 0 ? (
+            <tr>
+              <td
+                colSpan={columns.length}
+                style={{
+                  padding: '20px 10px',
+                  textAlign: 'center',
+                  color: 'var(--fg-3)',
+                  fontFamily: 'var(--font-numeral)',
+                  fontSize: 13,
+                  borderBottom: '1px solid var(--rule)',
+                }}
+              >
+                {emptyText ?? '—'}
+              </td>
+            </tr>
+          ) : (
+            rows.map((row, ri) => (
+              <tr
+                key={ri}
+                style={{
+                  background: ri % 2 === 0 ? 'var(--wgu-white)' : 'var(--bg-2)',
+                  borderBottom: '1px solid var(--rule)',
+                }}
+              >
+                {columns.map((col, ci) => {
+                  const cell = col.cell(row)
+                  const cellStyle: CSSProperties = {
+                    padding: '8px 10px',
+                    textAlign: col.align ?? 'left',
+                    fontSize: 13,
+                    color: 'var(--wgu-blue)',
+                  }
+                  if (col.colorBand) {
+                    const num = parseNumeric(cell as unknown)
+                    if (num != null) {
+                      cellStyle.background = bandColor(num, bandThresholds, invertBand)
+                      cellStyle.fontWeight = 700
+                    }
+                  }
+                  return (
+                    <td key={ci} style={cellStyle}>
+                      {cell}
+                    </td>
+                  )
+                })}
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  )
 }
 ```
 
