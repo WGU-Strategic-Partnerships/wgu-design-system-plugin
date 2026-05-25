@@ -47,8 +47,8 @@ The master roster is a Smartsheet sheet with columns Email, DisplayName, Role, A
 
 Thin REST wrapper — error class, authenticated fetch, generic row/cell types, and `readCell` / `readContactEmails` helpers for extracting typed values from Smartsheet's column-indexed cell format.
 
-```typescript
-// /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/smartsheet.ts
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/smartsheet.ts -->
+```ts
 import 'server-only'
 
 const BASE_URL = 'https://api.smartsheet.com/2.0'
@@ -175,8 +175,8 @@ Salesforce is read-only business data: account hierarchies, opportunity status, 
 
 PKCE OAuth flow, token exchange, token refresh, and the `SalesforceTokens` type. All downstream callers get tokens from here.
 
-```typescript
-// /Users/bentley/Documents/Claude/Projects/mbr-builder/src/lib/salesforce.ts
+<!-- /Users/bentley/Documents/Claude/Projects/mbr-builder/src/lib/salesforce.ts -->
+```ts
 import 'server-only'
 import { createHash, randomBytes } from 'crypto'
 
@@ -408,8 +408,8 @@ function parseTokenResponse(
 
 Query helpers — SOQL builders, paginated reads. Manages an in-process access-token cache (50 min TTL, coalesced refresh) and exposes typed helpers for every MBR-Builder query: enrollment KPIs, closed business, pipeline matrix, advancers/decliners, event counts, opportunity progression, new opps, lead source counts, and ReNEW pipeline.
 
-```typescript
-// /Users/bentley/Documents/Claude/Projects/mbr-builder/src/lib/salesforce-query.ts
+<!-- /Users/bentley/Documents/Claude/Projects/mbr-builder/src/lib/salesforce-query.ts -->
+```ts
 import 'server-only'
 import { getActiveSalesforceConnection } from './user-accounts'
 import { refreshAccessToken, type SalesforceTokens } from './salesforce'
@@ -1136,8 +1136,8 @@ export async function getRenewWon(verticalSfdc: string): Promise<number> {
 
 Sync orchestration — schedules and runs upserts into Supabase. Pulls all SFDC-sourced fields for a (role, vertical) pair using the query helpers above and returns a `{ field_id: value }` map ready to merge into the form data and hand to `upsertRow`.
 
-```typescript
-// /Users/bentley/Documents/Claude/Projects/mbr-builder/src/lib/salesforce-sync.ts
+<!-- /Users/bentley/Documents/Claude/Projects/mbr-builder/src/lib/salesforce-sync.ts -->
+```ts
 import 'server-only'
 import type { Role, Vertical } from './mbr-sheets'
 import {
@@ -1474,7 +1474,7 @@ export async function pullSalesforceSnapshotForRole(
 |---|---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Browser + server (`NEXT_PUBLIC_`) | Vercel environment vars | Client throws on init; all DB calls fail |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Browser + server (`NEXT_PUBLIC_`) | Vercel environment vars | Client throws on init; RLS-gated reads fail |
-| `SUPABASE_SERVICE_ROLE` | Server-only (no `NEXT_PUBLIC_` prefix) | Vercel environment vars (optional) | Only matters for admin operations that bypass RLS; do not set if not needed |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only (no `NEXT_PUBLIC_` prefix) | Vercel environment vars (optional) | Only matters for admin operations that bypass RLS; do not set if not needed |
 
 ### Smartsheet
 
