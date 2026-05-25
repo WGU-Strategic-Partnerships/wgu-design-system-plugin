@@ -45,11 +45,11 @@ README.md              You are here
 In Claude Code or Cowork:
 
 ```
-/plugin marketplace add <git-url-of-this-repo>
+/plugin marketplace add https://github.com/WGU-Strategic-Partnerships/wgu-design-system-plugin
 /plugin install wgu-design-system@wgu
 ```
 
-After install, the skill auto-activates on prompts like "make a deck about X", "build a landing page for Y", or "design a poster for Z".
+After install, the skill auto-activates on prompts like "make a deck about X", "build a landing page for Y", "design a poster for Z", or "scaffold a new WGU internal tool".
 
 ## Team setup, contributing, and updates
 
