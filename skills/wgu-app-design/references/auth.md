@@ -2,12 +2,33 @@
 
 ## The auth model
 
-WGU.tools uses Google SSO restricted to `@wgu.edu` accounts. After a successful OAuth exchange, `getCurrentUser()` looks up the signed-in address against the Smartsheet "master roster" (Members sheet, `Role` column) to determine role. There are three roles: **viewer** (on roster, no special flags), **admin** (`Role === 'Admin'` on the Members sheet), and **superadmin** (same as admin, but also listed in the hard-coded `ADMIN_EMAILS` set in `lib/auth.ts`). The `ADMIN_EMAILS` set is a break-glass mechanism — it survives any edit to the Smartsheet and ensures the founder can never lock themselves out by flipping their own admin flag off.
+Google SSO restricted to `@wgu.edu`. The `CurrentUser` shape exposes two booleans — `isMember` (on the master roster) and `isAdmin` (Role on the Members sheet is `'Admin'`, OR the email is in the hard-coded `ADMIN_EMAILS` set). At runtime these two booleans give three tiers in practice:
 
-## The `CurrentUser` type
+- **Viewer** — `isMember: true, isAdmin: false`. On the roster, no admin powers.
+- **Admin** — `isMember: true, isAdmin: true` via `Role === 'Admin'` on the sheet. Can reach `/admin`.
+- **Superadmin** — `isMember: true, isAdmin: true` via the hard-coded `ADMIN_EMAILS` set. Functionally identical to admin at the type level, but the hard-coded list survives sheet edits — it's the break-glass against an admin accidentally locking themselves out.
 
-<!-- src: wgu-tools/src/lib/auth.ts lines 16–31 -->
+The Members sheet also stores finer role labels (Admin / Director / Manager / Ops Team / SPM); only `'Admin'` is currently elevated to `isAdmin: true`. The rest provide org-chart context but no extra authorization.
+
+## The `CurrentUser` type and break-glass constants
+
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/auth.ts -->
 ```ts
+import 'server-only'
+import { createSupabaseServerClient } from './supabase-server'
+import { getAccessibleApps, getMember } from './master-roster'
+import type { AppSlug } from './sheets'
+
+const ALLOWED_DOMAIN = '@wgu.edu'
+
+/**
+ * Hard-coded super-admins — break-glass list so the founder can't lock
+ * themselves out by flipping their own admin flag off. Everyone else
+ * gains admin via the Is Admin checkbox on the Members sheet, which the
+ * /admin matrix toggles.
+ */
+const ADMIN_EMAILS = new Set<string>(['bentley.folkman@wgu.edu'])
+
 export type CurrentUser = {
   id: string
   email: string
@@ -28,7 +49,7 @@ export type CurrentUser = {
 
 ## `isAllowedEmail` and `isAdminEmail`
 
-<!-- src: wgu-tools/src/lib/auth.ts lines 33–41 -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/auth.ts -->
 ```ts
 export function isAllowedEmail(email: string | null | undefined): boolean {
   if (!email) return false
@@ -43,7 +64,7 @@ export function isAdminEmail(email: string | null | undefined): boolean {
 
 ## `getCurrentUser()` end-to-end
 
-<!-- src: wgu-tools/src/lib/auth.ts lines 43–96 -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/auth.ts -->
 ```ts
 export async function getCurrentUser(): Promise<CurrentUser | null> {
   const supabase = await createSupabaseServerClient()
@@ -105,7 +126,7 @@ The call sequence inside `getCurrentUser()` is: (1) instantiate the server Supab
 
 ## The `wgu_view_as` cookie
 
-<!-- src: wgu-tools/src/lib/auth.ts lines 98–107 -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/auth.ts -->
 ```ts
 async function readImpersonateCookie(): Promise<string | null> {
   // Lazy import to avoid pulling next/headers into modules that may run
@@ -123,7 +144,7 @@ Admins toggle the `wgu_view_as` cookie via the UI's "View as" control, typically
 
 ## Supabase server client + cookie-domain safety
 
-<!-- src: wgu-tools/src/lib/supabase-server.ts -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/supabase-server.ts -->
 ```ts
 import 'server-only'
 import { createServerClient } from '@supabase/ssr'
@@ -178,7 +199,7 @@ The `getSafeCookieDomain` helper is critical for multi-environment deployments. 
 
 ## Supabase browser client
 
-<!-- src: wgu-tools/src/lib/supabase-client.ts -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/supabase-client.ts -->
 ```ts
 import { createBrowserClient } from '@supabase/ssr'
 
@@ -194,7 +215,7 @@ The browser client is used only on the login page (to initiate the OAuth flow) a
 
 ## Master roster reader
 
-<!-- src: wgu-tools/src/lib/master-roster.ts -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/lib/master-roster.ts -->
 ```ts
 import 'server-only'
 import { revalidateTag, unstable_cache } from 'next/cache'
@@ -505,9 +526,11 @@ export async function setMemberAvatar(email: string, avatarUrl: string): Promise
 
 `master-roster.ts` is what feeds `getCurrentUser()` with member data. The sheet is fetched via `smartsheetFetch` (the actual Smartsheet API call lives in `lib/smartsheet.ts`, documented in `data-layer.md`), then cached with Next.js `unstable_cache` using a 60-second TTL and explicit `revalidateTag` calls after any mutation. The two sheets involved are the Members sheet (one row per user, has role and avatar) and the App Access sheet (one row per grant, links member email to an `AppSlug`).
 
+> Note: `revalidateTag(tag, 'default')` uses an internal wrapper signature — the second `'default'` argument scopes the invalidation to the default cache. See `lib/smartsheet.ts` (documented in [data-layer.md](./data-layer.md)) for the wrapper definition.
+
 ## Login page anatomy
 
-<!-- src: wgu-tools/src/app/login/page.tsx -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/app/login/page.tsx -->
 ```tsx
 'use client'
 
@@ -672,7 +695,7 @@ function GoogleIcon() {
 
 ## No-access page anatomy
 
-<!-- src: wgu-tools/src/app/no-access/page.tsx -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/app/no-access/page.tsx -->
 ```tsx
 import Link from 'next/link'
 import Image from 'next/image'
@@ -734,7 +757,7 @@ export default async function NoAccessPage() {
 
 ## Auth callback route
 
-<!-- src: wgu-tools/src/app/auth/callback/route.ts -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/app/auth/callback/route.ts -->
 ```ts
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
