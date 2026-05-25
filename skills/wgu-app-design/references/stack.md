@@ -2,9 +2,11 @@
 
 ## The stack
 
-WGU.tools and MBR Builder are built on Next.js 16 App Router + React 19 + TypeScript + Tailwind v4 + `@supabase/ssr` + Lucide icons. There is no shadcn/ui — components are raw Tailwind primitives plus the 8 shared parts in `src/components/ui/`. There is no CSS-in-JS (plain utility classes + CSS variables only) and no client-side state management library (Server Components + form actions carry the load instead).
+WGU.tools and MBR Builder are built on Next.js 16 App Router + React 19 + TypeScript + Tailwind v4 + `@supabase/ssr` + Lucide icons. There is no shadcn/ui — components live in `src/components/` directly; reusable design primitives are gathered in `src/components/ui/` (see [design-primitives.md](./design-primitives.md)). There is no CSS-in-JS (plain utility classes + CSS variables only) and no client-side state management library (Server Components + form actions carry the load instead).
 
 ## Pinned versions
+
+The pinned dependency set, excerpted from `package.json` (other top-level fields like `name`, `version`, `scripts` omitted):
 
 <!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/package.json -->
 ```json
@@ -34,7 +36,7 @@ WGU.tools and MBR Builder are built on Next.js 16 App Router + React 19 + TypeSc
 ```
 src/
   app/          (App Router pages + API routes)
-  components/   (shared React components; ui/ subdirectory for primitives)
+  components/   (shared React components; optional ui/ subdirectory holds reusable primitives — lifted from MBR Builder, see design-primitives.md)
   lib/          (server-only helpers, supabase clients, auth, master-roster)
 ```
 
@@ -128,7 +130,7 @@ export default config
 
 ## Root layout + font wiring
 
-<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/app/layout.tsx (lines 1–40) -->
+<!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/app/layout.tsx -->
 ```tsx
 import type { Metadata } from 'next'
 import { Jost } from 'next/font/google'
