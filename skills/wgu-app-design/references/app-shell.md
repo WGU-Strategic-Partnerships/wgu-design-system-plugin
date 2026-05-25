@@ -108,7 +108,7 @@ export async function AppShell({
 
 ## HeaderNav.tsx
 
-`HeaderNav` is a `'use client'` component that renders three category dropdowns (Executive, Leadership, Ops Team, Field Team) in the center of the header. Each dropdown groups the apps belonging to that category from `visibleApps`. Dropdowns close on Escape or backdrop click. The `CurrentUser` is resolved by `AppShell` before rendering; see [auth.md](./auth.md) for the `CurrentUser` type.
+`HeaderNav` is a `'use client'` component that renders four category dropdowns (Executive, Leadership, Ops Team, Field Team) in the center of the header. Each dropdown groups the apps belonging to that category from `visibleApps`. Dropdowns close on Escape or backdrop click. User access filtering happens in `AppShell` before `visibleApps` is passed down; see [auth.md](./auth.md) for the `CurrentUser` type and access model.
 
 <!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/components/HeaderNav.tsx -->
 ```tsx
@@ -480,7 +480,7 @@ const menuDivider: React.CSSProperties = {
 
 ## UserAvatar.tsx
 
-`UserAvatar` renders a user's avatar in three modes, checked in order: `photo` (renders `<img>` from `avatarUrl`), `emoji` (emoji character on a colored circle), and `initials` (first-letter initials derived via `initialsFrom()`). Falls back to the `fallbackName` (typically the email address) when `profile` is null. Used by `UserMenu` for the header button and also by the profile settings editor preview.
+`UserAvatar` is a `'use client'` component that renders a user's avatar in three modes, checked in order: `photo` (renders `<img>` from `avatarUrl`), `emoji` (emoji character on a colored circle), and `initials` (first-letter initials derived via `initialsFrom()`). Falls back to the `fallbackName` (typically the email address) when `profile` is null. Used by `UserMenu` for the header button and also by the profile settings editor preview.
 
 <!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/components/UserAvatar.tsx -->
 ```tsx
@@ -585,7 +585,7 @@ export default function UserAvatar({ profile, fallbackName, size = 'md', classNa
 
 ## ImpersonationBanner.tsx
 
-`ImpersonationBanner` renders only when `currentUser.impersonator` is non-null (i.e., an admin has activated "View as"). It displays a full-width WGU-blue sticky bar: "Viewing as **\<target\>** (signed in as \<actor\>)" with a "Stop viewing" button. The button calls `adminStopViewAs()` (which clears the `wgu_view_as` cookie server-side), then pushes to `/admin` and refreshes. See [auth.md](./auth.md) for the cookie mechanic and the `impersonator` field on `CurrentUser`.
+`ImpersonationBanner` renders only when `currentUser.impersonator` is non-null (i.e., an admin has activated "View as"). It displays a full-width WGU-blue bar: "Viewing as **\<target\>** (signed in as \<actor\>)" with a "Stop viewing" button. The button calls `adminStopViewAs()` (which clears the `wgu_view_as` cookie server-side), then pushes to `/admin` and refreshes. See [auth.md](./auth.md) for the cookie mechanic and the `impersonator` field on `CurrentUser`.
 
 <!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/components/ImpersonationBanner.tsx -->
 ```tsx
