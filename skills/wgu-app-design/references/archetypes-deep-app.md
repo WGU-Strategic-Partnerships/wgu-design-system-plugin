@@ -685,7 +685,7 @@ export default function Comments({ role, rowId, comments, currentUserEmail, isAd
 
 Renders a submission as a full editorial slide layout — DOM only, no canvas or PDF. Acts as a thin router: `SlidePreview` dispatches to `PSMSlide` or `PESlide` based on `role`. Both slide components use a shared dark-hero masthead (`SlideMasthead`), `§`-numbered section headers, a 12-column CSS grid, and the viz primitives from `components/viz/`. Data degrades gracefully — missing values render as em-dashes, sections with no usable data are dropped. This pattern is useful for any deep app that needs to preview a complex structured artifact (report, proposal, plan) as a rendered DOM view rather than a PDF export.
 
-The component is large (3794 lines); the source-path comment below points to the full file. The excerpt above covers the public API and routing logic.
+The component is large (3793 lines); the source-path comment below points to the full file. The excerpt above covers the public API and routing logic.
 
 ```tsx
 // Public API excerpt — full source at the path below
@@ -722,7 +722,7 @@ The visualization primitives that power the slide preview. These are the data-di
 
 Barrel export. Also exports `PIPELINE_STAGE_COLORS` — the canonical five-color palette for pipeline stage funnels (discovery, intake, pitch, negotiation, signing). Import from here rather than individual files.
 
-```tsx
+```ts
 /**
  * Visualization library — pure-SVG / inline-style chart and tile components
  * used in the slide preview. Per MBR_V2_BUILD_SPEC.md Phase 2.
@@ -762,7 +762,7 @@ export const PIPELINE_STAGE_COLORS = {
 
 <!-- /Users/bentley/Documents/Claude/Projects/mbr-builder/src/components/viz/kpi-card.tsx -->
 
-Editorial KPI tile: 2px role-accent top rule, uppercase label, large Jost-bold value, optional inline delta chip, optional sub-caption. Use anywhere a single big number belongs — slide sections, admin mini-stats, scratch dashboards. Accepts an optional `belowValue` slot for composing with a `Gauge` or `PacingGauge` directly beneath the number.
+Editorial KPI tile: 2px role-accent top rule, uppercase label, large Jost-bold value (the pasted JSDoc still says "Newsreader-italic" — that's a stale comment in the source; runtime renders via `<Numeral>` which uses Jost), optional inline delta chip, optional sub-caption. Use anywhere a single big number belongs — slide sections, admin mini-stats, scratch dashboards. Accepts an optional `belowValue` slot for composing with a `Gauge` or `PacingGauge` directly beneath the number.
 
 ```tsx
 import type { CSSProperties, ReactNode } from 'react'
@@ -1339,7 +1339,7 @@ export function Sparkline({
 
 <!-- /Users/bentley/Documents/Claude/Projects/mbr-builder/src/components/viz/donut.tsx -->
 
-SVG donut chart with center total and a tight legend underneath each slice. Built with stroke-dasharray arcs on a single circle element per slice. Used for exec-attended split in PSM and per-tier event mix in PE.
+SVG donut chart with center total and a tight legend underneath each slice. Built with stroke-dasharray arcs on a single circle element per slice. Used for exec-present split in PSM and per-tier event mix in PE.
 
 ```tsx
 import type { CSSProperties } from 'react'
