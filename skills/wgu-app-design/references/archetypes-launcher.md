@@ -68,7 +68,7 @@ Bento layout (what `HomeBento` actually renders — greeting + status, then bent
 
 ```
 ┌── greeting block (h1 + system-status pulse) ─────────────────────────────┐
-│  Good morning, Bentley.   ● all 12 tools operational                      │
+│  Good morning, Bentley.   ● all 13 tools operational                      │
 └───────────────────────────────────────────────────────────────────────────┘
 ┌── FeaturedAppTile (bento-featured) ──┐  ┌── StatusCard ─┐  ┌── StatusCard ─┐
 │                                       │  │ (priority 1)  │  │ (priority 2)  │
@@ -602,7 +602,7 @@ export function UsageTracker({
 
 ## `AppLauncher.tsx`
 
-React context provider (`LauncherProvider`) that holds the client-side launcher state: the set of visible app IDs, favorites and recents (both persisted in `localStorage`), visit recording, and latest health data. Also exports `CATEGORY_ACCENT`, `TILE_ICON`, `useLauncher`, `SearchBar`, `AppSections`, and the `Tile` sub-component that renders each app card in the full-directory view.
+React context provider (`LauncherProvider`) that holds the client-side launcher state: the set of visible app IDs, favorites and recents (both persisted in `localStorage`), visit recording, and latest health data. Also exports `CATEGORY_ACCENT`, `TILE_ICON`, `useLauncher`, `SearchBar`, and `AppSections`. (`Tile` is an internal card sub-component used by `AppSections` — not exported.)
 
 <!-- /Users/bentley/Documents/Claude/Projects/wgu-tools/src/components/AppLauncher.tsx -->
 
