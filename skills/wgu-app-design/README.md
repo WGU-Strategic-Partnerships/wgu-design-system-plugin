@@ -39,14 +39,36 @@ Every WGU app following this canon ships with:
 | [data-layer.md](references/data-layer.md) | Supabase + Salesforce + Smartsheet patterns |
 | [deploy.md](references/deploy.md) | Vercel + env vars + health-check + deploy gates |
 
-## Phasing
+## How a build session works
 
-This is **Phase 1** of a three-phase rollout:
-- Phase 1 (here) — Reference docs.
-- Phase 2 — Copyable scaffold under `scaffold/`.
-- Phase 3 — A decision-tree SKILL.md that drives the scaffold for one-shot bootstraps.
+When you prompt Claude to "build a WGU app" (or any matching phrase), the skill activates in **bootstrap mode**:
 
-Today, building a WGU app with this skill works like: Claude reads the right `references/*.md` and writes the app by hand. Phase 2 will replace much of that with `cp -r`.
+1. Claude reads `SKILL.md` → routes to `scaffold-bootstrap.md`.
+2. Claude asks 4 questions: archetype (launcher / deep app), project name, target directory, Supabase project ID (optional).
+3. Claude confirms the plan, then copies `scaffold/_common/` + the chosen archetype overlay into the target directory.
+4. `__APP_NAME__` is substituted with your project name in `package.json` + `layout.tsx`.
+5. `git init` + first commit.
+6. `pnpm install` + `pnpm typecheck` (both must exit 0; otherwise Claude stops).
+7. Claude prints a manual-steps checklist (create Supabase project, register Google OAuth, set up Smartsheet master roster, create Vercel project, set env vars).
+
+When you ask Claude a documentation question instead ("what's the WGU auth pattern?"), the skill activates in **Q&A mode** and answers from `references/*.md` without scaffolding anything.
+
+## What the bootstrap will NOT do
+
+Even in bootstrap mode, these stay manual:
+- Create the Supabase project.
+- Register the Google OAuth client.
+- Create the Smartsheet master-roster sheets.
+- Create the Vercel project.
+- Push to a remote.
+
+All require credentials/auth this skill doesn't carry. The final checklist links each one to the right reference doc.
+
+## Build history
+
+- **Phase 1 — Reference docs** (shipped).
+- **Phase 2 — Copyable scaffold** under `scaffold/_common/`, `scaffold/launcher/`, `scaffold/deep_app/` (shipped, ~80 files, verified `pnpm typecheck + lint` exit 0).
+- **Phase 3 — Decision-tree bootstrap** via `scaffold-bootstrap.md` (shipped — you're reading the post-Phase-3 README).
 
 ## Source apps (the canon)
 

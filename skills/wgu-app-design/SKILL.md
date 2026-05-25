@@ -4,12 +4,25 @@ description: Use this skill to build full WGU-branded Next.js web applications �
 user-invocable: true
 ---
 
-Read the `README.md` in this folder first, then the relevant docs under `references/`.
+## Routing — decide what the user wants
 
-For brand fundamentals (colors, type, logos, patterns) defer to the sibling `wgu-design` skill — this skill does not duplicate them.
+This skill has two modes:
 
-Key files:
+1. **Bootstrap mode** — user wants to **scaffold a new WGU app from the canonical scaffold**. Triggers: "build me a WGU app", "scaffold a new WGU tool", "start a new WGU Next.js app", "create a WGU internal tool", or any other phrasing that implies creating a fresh project from scratch.
+   → **Read `scaffold-bootstrap.md` and follow its procedure exactly.** It's a 12-step decision tree (ask 4 questions, confirm, then copy + substitute + git init + pnpm install + typecheck + print manual checklist).
+
+2. **Documentation / Q&A mode** — user wants to learn about the canon ("what's the WGU auth pattern?", "what's in the app shell?", "how does role-based access work?"). Triggers: "what's the…", "how does…", "explain…", "show me…".
+   → **Skip `scaffold-bootstrap.md`.** Read `README.md` first, then the relevant `references/*.md` to answer.
+
+If the user's intent is ambiguous, ask one clarifying question: "Are you trying to scaffold a new app, or asking about the canon?" Don't assume.
+
+## Files in this skill
+
 - `README.md` — skill index + activation triggers + assumptions
+- `scaffold-bootstrap.md` — **the bootstrap procedure** (12-step decision tree; used in bootstrap mode)
+- `scaffold/_common/` — base layer copied for both archetypes (configs, pages, libs, components, ui primitives)
+- `scaffold/launcher/` — overlay for the launcher archetype (bento home, command palette, app registry)
+- `scaffold/deep_app/` — overlay for the deep-app archetype (role-scoped pages, history, viz primitives)
 - `references/stack.md` — the canonical stack (versions pinned to WGU.tools / MBR Builder)
 - `references/auth.md` — Google SSO + Smartsheet master roster + impersonation
 - `references/app-shell.md` — AppShell + HeaderNav + UserMenu + UserAvatar + ImpersonationBanner
@@ -19,9 +32,10 @@ Key files:
 - `references/data-layer.md` — Supabase as default, Salesforce + Smartsheet patterns
 - `references/deploy.md` — Vercel, env vars, health-check, deploy gates
 
-When asked to build a WGU app, first ask: "launcher (hub of tools, like WGU.tools) or deep app (single focused tool, like MBR Builder)?" Then read the matching archetype doc and the supporting references before writing any code.
+For brand fundamentals (colors, type, logos, patterns) defer to the sibling `wgu-design` skill — this skill does not duplicate them.
 
-Hard assumptions that ride with this skill:
+## Hard assumptions that ride with this skill
+
 1. Stack is non-negotiable: Next.js 16 App Router + React 19 + TypeScript + Tailwind v4 + `@supabase/ssr` + Lucide. `src/` directory layout.
 2. Auth is Google SSO restricted to `@wgu.edu` with three roles sourced from a Smartsheet master roster.
 3. Server modules import `server-only`. Third-party data reads always go server-side.
