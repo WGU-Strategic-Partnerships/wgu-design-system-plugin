@@ -11,7 +11,7 @@ This repository doubles as a Claude **plugin marketplace**, so the WGU team can 
   plugin.json          Plugin manifest (name, version, description)
   marketplace.json     Marketplace manifest (so this repo can be added as a marketplace)
 skills/
-  wgu-design/          The WGU design system skill itself
+  wgu-design/          The WGU brand & marketing skill (decks, posters, landing pages)
     SKILL.md           Skill manifest read by Claude
     README.md          Full brand system documentation
     colors_and_type.css
@@ -20,9 +20,25 @@ skills/
     slides/            Evergreen slide archetypes
     ui_kits/           Marketing site + student portal kits
     ONBOARDING.md
+  wgu-app-design/      The WGU app-build skill (Next.js apps for staff tools)
+    SKILL.md           Skill manifest read by Claude
+    README.md          Skill index + assumptions
+    ONBOARDING.md
+    references/        Canonical docs (stack, auth, app-shell, primitives, archetypes, data, deploy)
 TEAM_SETUP.md          Team install + contribute guide
 README.md              You are here
 ```
+
+## Which skill fires when
+
+| Prompt sounds like | Skill |
+|---|---|
+| "make a deck / poster / landing page" | `wgu-design` |
+| "design an asset / mock / prototype" | `wgu-design` |
+| "what's the WGU color / type / logo?" | `wgu-design` |
+| "build a WGU internal tool / app / dashboard" | `wgu-app-design` |
+| "scaffold a Next.js app for the team" | `wgu-app-design` |
+| "what's the WGU auth pattern?" | `wgu-app-design` |
 
 ## Quick install (for individuals)
 
