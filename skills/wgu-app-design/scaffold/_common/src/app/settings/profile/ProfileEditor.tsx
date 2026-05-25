@@ -102,8 +102,8 @@ export function ProfileEditor({ email, googleName, initialProfile, isImpersonati
           <p className="page-eyebrow">Settings</p>
           <h1 className="page-title">Your profile</h1>
           <p className="page-sub">
-            Choose how your name and avatar appear across every WGU.tools app. Saves
-            propagate to all apps on the next page load.
+            Choose how your name and avatar appear across every __APP_NAME__ page. Saves
+            propagate on the next page load.
           </p>
         </div>
         <button

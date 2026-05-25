@@ -9,8 +9,7 @@ import {
   Wrench,
   type LucideIcon,
 } from 'lucide-react'
-import { CATEGORY_ORDER, type AppCategory, type AppTile } from '@/lib/apps'
-import { CATEGORY_ACCENT } from './AppLauncher'
+import { CATEGORY_ORDER, CATEGORY_ACCENT, type AppCategory, type AppTile } from '@/lib/apps'
 
 const CATEGORY_ICON: Record<AppCategory, LucideIcon> = {
   Executive: Briefcase,

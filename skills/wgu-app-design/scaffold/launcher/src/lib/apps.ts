@@ -83,6 +83,14 @@ export const CATEGORY_ICON: Record<AppCategory, string> = {
   'Field Team': 'compass',
 }
 
+/** Category accent colours used in nav dropdowns and category chips. */
+export const CATEGORY_ACCENT: Record<AppCategory, string> = {
+  Executive:    'var(--cat-executive)',
+  Leadership:   'var(--cat-leadership)',
+  'Ops Team':   'var(--cat-ops-team)',
+  'Field Team': 'var(--cat-field-team)',
+}
+
 /**
  * Roles assignable to a member from the admin page. Determines that
  * member's default app access; the admin can still customize per-app

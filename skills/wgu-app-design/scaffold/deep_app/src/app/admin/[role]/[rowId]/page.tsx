@@ -155,8 +155,7 @@ export default async function AdminDetailPage({
         >
           <p style={{ color: 'var(--fg-2)', fontStyle: 'italic', margin: 0 }}>
             __APP_NAME__: render your record detail / preview here. See{' '}
-            <code>references/archetypes-deep-app.md</code> for the full MBR Builder
-            SlidePreview implementation.
+            <code>references/archetypes-deep-app.md</code> for a full reference implementation.
           </p>
         </div>
 

@@ -29,7 +29,7 @@ export default function LoginPage() {
         </div>
         <p className="page-eyebrow">WGU Strategic Partnerships</p>
         <h1 className="page-title" style={{ fontSize: 28 }}>
-          WGU.tools
+          __APP_NAME__
         </h1>
         <p className="page-sub">
           Sign in with your WGU Google account to open the toolset.

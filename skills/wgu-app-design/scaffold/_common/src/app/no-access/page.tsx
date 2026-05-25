@@ -36,8 +36,8 @@ export default async function NoAccessPage() {
         </h1>
         <p className="page-sub">
           You&rsquo;re signed in as <strong style={{ color: 'var(--fg-1)' }}>{user.email}</strong>,
-          but you haven&rsquo;t been added to WGU.tools yet. Reach out to Bentley
-          to request access and you&rsquo;ll see the toolset on your next sign-in.
+          but you haven&rsquo;t been added to __APP_NAME__ yet. Reach out to your
+          administrator to request access and you&rsquo;ll see the toolset on your next sign-in.
         </p>
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>

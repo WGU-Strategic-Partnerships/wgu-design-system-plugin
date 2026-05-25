@@ -57,8 +57,8 @@ export default async function RolePage({
         <div className="card card-padded">
           <p style={{ color: 'var(--fg-2)', fontStyle: 'italic' }}>
             __APP_NAME__: render your role-scoped content here. See{' '}
-            <code>references/archetypes-deep-app.md</code> for the full MBR
-            Builder version.
+            <code>references/archetypes-deep-app.md</code> for a full reference
+            implementation.
           </p>
         </div>
       </main>

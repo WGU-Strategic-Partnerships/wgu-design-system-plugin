@@ -45,7 +45,8 @@ export const TILE_ICON: Record<string, LucideIcon> = {
   'shield-check': ShieldCheck,
   'sparkles': Sparkles,
 }
-import { APPS, CATEGORY_ORDER, type AppCategory, type AppTile } from '@/lib/apps'
+import { APPS, CATEGORY_ACCENT, CATEGORY_ORDER, type AppTile } from '@/lib/apps'
+export { CATEGORY_ACCENT } from '@/lib/apps'
 import type { AppHealth } from '@/lib/health'
 
 // Replace '__app-name__' with your app's unique storage namespace.
@@ -54,13 +55,6 @@ const STORAGE_KEYS = {
   recents:   '__app-name__.recents.v1',
 }
 const MAX_RECENTS = 4
-
-export const CATEGORY_ACCENT: Record<AppCategory, string> = {
-  Executive:   'var(--cat-executive)',
-  Leadership:  'var(--cat-leadership)',
-  'Ops Team':  'var(--cat-ops-team)',
-  'Field Team': 'var(--cat-field-team)',
-}
 
 function saveJSON(key: string, value: unknown) {
   if (typeof window === 'undefined') return

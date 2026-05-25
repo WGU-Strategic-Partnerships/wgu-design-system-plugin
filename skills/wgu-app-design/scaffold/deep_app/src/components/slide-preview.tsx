@@ -82,7 +82,7 @@ export default function SlidePreview({
       <p style={{ fontSize: 13, margin: 0 }}>
         Replace this component with your own detail/preview view.
         <br />
-        See <code>references/archetypes-deep-app.md</code> for the full MBR Builder implementation.
+        See <code>references/archetypes-deep-app.md</code> for a full reference implementation.
       </p>
     </div>
   )
